@@ -1,18 +1,3 @@
-@use './theme';
-@use '@angular/material' as mat;
-
-
-html {
-  @include mat.theme((
-    color: (
-      primary: mat.$blue-palette,
-      secondary: mat.$yellow-palette,
-      warn: mat.$red-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
-}
 
 body {
   margin: 0;
