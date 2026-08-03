@@ -1,16 +1,14 @@
-import { NgModule } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { CursosComponent } from './cursos/cursos/cursos.component';
 
-export const routes: Routes = [];
-
-@NgModule({
-  declarations: [],
-
-  imports: [
-    MatToolbarModule,
-    RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule { }
+export const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'cursos',
+    component: CursosComponent
+  }
+];
