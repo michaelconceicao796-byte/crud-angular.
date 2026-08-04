@@ -1,3 +1,16 @@
 table {
   width: 100%;
 }
+mat-toolbar {
+  background-color: #3f51b5;
+  color: white;
+}
+.loading-spinner {
+
+  padding: 25px;
+  background: rgba(43, 41, 41, 0.233);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}

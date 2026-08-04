@@ -8,6 +8,6 @@ import { MatTableModule } from '@angular/material/table';
   standalone: true,
   imports: [RouterOutlet, MatToolbarModule, MatTableModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {}
