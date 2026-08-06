@@ -36,12 +36,12 @@ import { ErrorDialogComponent } from '../../pasta/components/error-dialog/error-
 })
 export class CursosComponent implements OnInit {
   cursos$!: Observable<Curso[]>;
-  displayedColumns = ['name', 'category'];
+  readonly displayedColumns = ['name', 'category'];
 
   // cursosService: CursosService;
 
   constructor(
-    private cursosService: CursosService,
+    private readonly cursosService: CursosService,
     public dialog: MatDialog
   ) {
     // this.cursos = []

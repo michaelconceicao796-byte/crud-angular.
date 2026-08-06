@@ -11,7 +11,7 @@ export class CursosService {
 
 private readonly API = '/cursos.json';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private readonly httpClient: HttpClient) { }
 
   list() {
     return this.httpClient.get<Curso[]>(this.API).pipe(
