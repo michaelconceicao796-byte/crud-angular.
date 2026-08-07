@@ -6,6 +6,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+
+
 
 @NgModule({
   exports: [
@@ -16,6 +21,9 @@ import {MatIconModule} from '@angular/material/icon';
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
 })
 export class AppMaterialModule {}
