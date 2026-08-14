@@ -5,18 +5,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MatButtonModule } from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import { CategoryPipe } from '../../pasta/pipes/category-pipe';
+import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Curso } from '../model/curso';
 import { CursosService } from '../services/cursos.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../pasta/components/error-dialog/error-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CursoListComponent } from '../curso-list/curso-list.component';
 
 @Component({
   selector: 'app-cursos',
@@ -32,16 +31,15 @@ import { ActivatedRoute, Router } from '@angular/router';
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
-    CategoryPipe,
     ReactiveFormsModule,
-
+    CursoListComponent,
   ],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.scss',
 })
 export class CursosComponent implements OnInit {
-  readonly cursos$!: Observable<Curso[]>;
-  readonly displayedColumns = ['name','category','actions'];
+  cursos$!: Observable<Curso[]>;
+  // cursos: Curso[] = [];
 
   // cursosService: CursosService;
 
@@ -49,15 +47,15 @@ export class CursosComponent implements OnInit {
     private readonly cursosService: CursosService,
     private readonly dialog: MatDialog,
     private readonly router: Router,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
   ) {
     // this.cursos = []
     // this.cursosService = new CursosService();
     this.cursos$ = this.cursosService.list().pipe(
-      catchError(error => {
+      catchError((error) => {
         this.onError('Erro ao carregar cursos');
-        return of([])
-      })
+        return of([]);
+      }),
     );
 
     // this.cursosService.list().subscribe(cursos => this.cursos = cursos);
@@ -65,15 +63,28 @@ export class CursosComponent implements OnInit {
 
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg
+      data: errorMsg,
     });
   }
 
-ngOnInit(): void {
-  // this.onError('Erro ao carregar cursos.');
-}
+  ngOnInit(): void {
+    // this.onError('Erro ao carregar cursos.');
+  }
 
-onAdd(){
-  this.router.navigate(['/cursos/new'], {relativeTo: this.route});
-}
+  onAdd() {
+    this.router.navigate(['/cursos/new'], { relativeTo: this.route });
+  }
+
+  onDelete(curso: Curso): void {
+    if (confirm(`Deseja remover o curso ${curso.name}?`)) {
+      this.cursosService.delete(curso._id).subscribe({
+        next: () => {
+          this.cursos$ = this.cursosService.list();
+        },
+        error: () => {
+          this.onError('Erro ao remover curso');
+        },
+      });
+    }
+  }
 }

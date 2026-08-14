@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Curso } from '../model/curso';
-import { first, tap } from 'rxjs/operators';
+import { delay, first, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,10 @@ private readonly API = 'api/cursos';
   save(record: Curso) {
     return this.httpClient.post<Curso>(this.API, record);
   }
+
+  delete(id: number) {
+  return this.httpClient.delete(`${this.API}/${id}`);
+}
+
 }
 
