@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
-import { AppMaterialModule } from '../../pasta/app-material/app-material-module';
-import { CursosService } from '../services/cursos.service';
+import { AppMaterialModule } from '../../../pasta/app-material/app-material-module';
+import { CursosService } from '../../services/cursos.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

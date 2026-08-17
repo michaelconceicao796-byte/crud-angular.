@@ -4,9 +4,10 @@
   </mat-card-header>
 
   <div class="column-flex">
-    <app-curso-list *ngIf="cursos$ | async as cursos; else loading" [cursos]="cursos">
-    </app-curso-list>
-
+    <app-curso-list *ngIf="cursos$ | async as cursos; else loading"
+    [cursos]="cursos"
+    (add)="onAdd()"
+        ></app-curso-list>
 
     <mat-card-content>
       <ng-template #loading>

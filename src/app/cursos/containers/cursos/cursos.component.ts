@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { Curso } from '../model/curso';
-import { CursosService } from '../services/cursos.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { ErrorDialogComponent } from '../../pasta/components/error-dialog/error-dialog.component';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CursoListComponent } from '../curso-list/curso-list.component';
+import { ErrorDialogComponent } from '../../../pasta/components/error-dialog/error-dialog.component';
+import { Curso } from '../../model/curso';
+import { CursosService } from '../../services/cursos.service';
+import { CursoListComponent } from "../../components/curso-list/curso-list.component";
 
 @Component({
   selector: 'app-cursos',
@@ -32,12 +32,13 @@ import { CursoListComponent } from '../curso-list/curso-list.component';
     MatButtonModule,
     MatIconModule,
     ReactiveFormsModule,
-    CursoListComponent,
-  ],
+    CursoListComponent
+],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.scss',
 })
 export class CursosComponent implements OnInit {
+
   cursos$!: Observable<Curso[]>;
   // cursos: Curso[] = [];
 
