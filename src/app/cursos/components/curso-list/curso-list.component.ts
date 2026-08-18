@@ -18,7 +18,9 @@ import { AppMaterialModule } from "../../../pasta/app-material/app-material-modu
 export class CursoListComponent implements OnInit {
 
   @Input() cursos: Curso[] = [];
-  @Output() add = new EventEmitter<boolean>();
+  @Output() add = new EventEmitter<void>();
+  @Output() edit = new EventEmitter<Curso>();
+  @Output() delete = new EventEmitter<string>();
 
   readonly displayedColumns = ['name', 'category', 'actions'];
 
@@ -29,13 +31,16 @@ export class CursoListComponent implements OnInit {
    }
 
   onAdd() {
-    this.add.emit(true);
+    this.add.emit();
   }
 
-  onDelete(id: number) {
-    this.cursosService.delete(id).subscribe(() => {
-      this.cursos = this.cursos.filter(curso => curso._id !== id);
-    });
+  onEdit(curso: Curso) {
+    console.log('Curso para editar:', curso);
+    this.edit.emit(curso);
+  }
+
+  onDelete(id: string) {
+    this.delete.emit(id);
   }
 
 }

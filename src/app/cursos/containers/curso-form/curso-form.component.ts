@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { AppMaterialModule } from '../../../pasta/app-material/app-material-module';
 import { CursosService } from '../../services/cursos.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -20,6 +21,7 @@ export class CursoFormComponent implements OnInit {
     private readonly service: CursosService,
     private readonly snackBar: MatSnackBar,
     private readonly location: Location,
+    private readonly route: ActivatedRoute,
   ) {
     this.form = this.formBuilder.group({
       name: [''],
@@ -28,8 +30,14 @@ export class CursoFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //inicialize aqui
-  }
+  const curso = this.route.snapshot.data['curso'];
+
+  this.form.patchValue({
+    _id: curso._id,
+    name: curso.name,
+    category: curso.category
+  });
+}
 
   onSubmit(): void {
     this.service

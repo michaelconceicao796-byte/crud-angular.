@@ -71,14 +71,17 @@ export class CursosComponent implements OnInit {
   ngOnInit(): void {
     // this.onError('Erro ao carregar cursos.');
   }
-
   onAdd() {
-    this.router.navigate(['/cursos/new'], { relativeTo: this.route });
+    this.router.navigate(['new'], { relativeTo: this.route });
   }
 
-  onDelete(curso: Curso): void {
-    if (confirm(`Deseja remover o curso ${curso.name}?`)) {
-      this.cursosService.delete(curso._id).subscribe({
+  onEdit(curso: Curso) {
+    this.router.navigate(['edit/1', curso._id]);
+  }
+
+  onDelete(id: string): void {
+    if (confirm('Deseja remover este curso?')) {
+      this.cursosService.delete(id).subscribe({
         next: () => {
           this.cursos$ = this.cursosService.list();
         },

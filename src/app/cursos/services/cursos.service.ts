@@ -20,13 +20,17 @@ private readonly API = 'api/cursos';
       tap(cursos => console.log(cursos))
     );
   }
+
+  loadById(id: string) {
+    return this.httpClient.get<Curso>(`${this.API}/${id}`);
+  }
+
   save(record: Curso) {
     return this.httpClient.post<Curso>(this.API, record);
   }
 
-  delete(id: number) {
+  delete(id: string) {
   return this.httpClient.delete(`${this.API}/${id}`);
 }
 
 }
-
