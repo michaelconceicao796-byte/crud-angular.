@@ -18,6 +18,7 @@ import { AppMaterialModule } from "../../../pasta/app-material/app-material-modu
 export class CursoListComponent implements OnInit {
 
   @Input() cursos: Curso[] = [];
+  
   @Output() add = new EventEmitter<void>();
   @Output() edit = new EventEmitter<Curso>();
   @Output() delete = new EventEmitter<string>();

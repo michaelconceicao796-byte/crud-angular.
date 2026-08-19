@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { CursosComponent } from './cursos/containers/cursos/cursos.component';
 import { CursoFormComponent } from './cursos/containers/curso-form/curso-form.component';
-import { CursoResolver } from './cursos/resolvers/curso.resolver';
+import { CursoResolver } from './cursos/guards/curso-resolver';
 
 export const routes: Routes = [
   {

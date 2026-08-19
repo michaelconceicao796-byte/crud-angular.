@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import {MatInputModule} from '@angular/material/input';
 
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -32,7 +33,8 @@ import { CursoListComponent } from "../../components/curso-list/curso-list.compo
     MatButtonModule,
     MatIconModule,
     ReactiveFormsModule,
-    CursoListComponent
+    CursoListComponent,
+    MatInputModule
 ],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.scss',
@@ -76,7 +78,8 @@ export class CursosComponent implements OnInit {
   }
 
   onEdit(curso: Curso) {
-    this.router.navigate(['edit/1', curso._id]);
+    console.log('ID do curso:', curso._id);
+    this.router.navigate(['/cursos/edit', curso._id]);
   }
 
   onDelete(id: string): void {

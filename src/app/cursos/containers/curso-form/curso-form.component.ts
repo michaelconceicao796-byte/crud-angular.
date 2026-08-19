@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppMaterialModule } from '../../../pasta/app-material/app-material-module';
 import { CursosService } from '../../services/cursos.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Curso } from '../../model/curso';
 
 @Component({
   selector: 'app-curso-form',
@@ -14,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './curso-form.component.scss',
 })
 export class CursoFormComponent implements OnInit {
+  
   form: FormGroup;
 
   constructor(
@@ -24,20 +26,23 @@ export class CursoFormComponent implements OnInit {
     private readonly route: ActivatedRoute,
   ) {
     this.form = this.formBuilder.group({
+      _id: [''],
       name: [''],
       category: [''],
     });
   }
 
   ngOnInit(): void {
-  const curso = this.route.snapshot.data['curso'];
+  const curso: Curso | undefined = this.route.snapshot.data['curso'];
 
-  this.form.patchValue({
-    _id: curso._id,
-    name: curso.name,
-    category: curso.category
-  });
-}
+    if(curso){
+    this.form.setValue({
+      _id: curso._id,
+      name: curso.name,
+      category: curso.category
+    });
+  }
+    }
 
   onSubmit(): void {
     this.service
