@@ -18,10 +18,10 @@ import { AppMaterialModule } from "../../../pasta/app-material/app-material-modu
 export class CursoListComponent implements OnInit {
 
   @Input() cursos: Curso[] = [];
-  
+
   @Output() add = new EventEmitter<void>();
   @Output() edit = new EventEmitter<Curso>();
-  @Output() delete = new EventEmitter<string>();
+  @Output() delete = new EventEmitter<Curso>();
 
   readonly displayedColumns = ['name', 'category', 'actions'];
 
@@ -40,8 +40,11 @@ export class CursoListComponent implements OnInit {
     this.edit.emit(curso);
   }
 
-  onDelete(id: string) {
-    this.delete.emit(id);
-  }
+  onDelete(curso: Curso) {
+  console.log('CURSO RECEBIDO NO LIST:', curso);
+  console.log('ID RECEBIDO NO LIST:', curso._id);
+
+  this.delete.emit(curso);
+}
 
 }

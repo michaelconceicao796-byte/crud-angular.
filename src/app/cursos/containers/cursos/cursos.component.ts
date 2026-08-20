@@ -8,6 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {MatInputModule} from '@angular/material/input';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -17,6 +18,7 @@ import { ErrorDialogComponent } from '../../../pasta/components/error-dialog/err
 import { Curso } from '../../model/curso';
 import { CursosService } from '../../services/cursos.service';
 import { CursoListComponent } from "../../components/curso-list/curso-list.component";
+
 
 @Component({
   selector: 'app-cursos',
@@ -34,14 +36,14 @@ import { CursoListComponent } from "../../components/curso-list/curso-list.compo
     MatIconModule,
     ReactiveFormsModule,
     CursoListComponent,
-    MatInputModule
+    MatInputModule,
 ],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.scss',
 })
 export class CursosComponent implements OnInit {
 
-  cursos$!: Observable<Curso[]>;
+  cursos$: Observable<Curso[]> | null = null;
   // cursos: Curso[] = [];
 
   // cursosService: CursosService;
@@ -51,17 +53,23 @@ export class CursosComponent implements OnInit {
     private readonly dialog: MatDialog,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
+    private readonly snackBar: MatSnackBar,
   ) {
     // this.cursos = []
     // this.cursosService = new CursosService();
+    this.refresh();
+
+
+    // this.cursosService.list().subscribe(cursos => this.cursos = cursos);
+  }
+
+  refresh(){
     this.cursos$ = this.cursosService.list().pipe(
       catchError((error) => {
         this.onError('Erro ao carregar cursos');
         return of([]);
-      }),
+      })
     );
-
-    // this.cursosService.list().subscribe(cursos => this.cursos = cursos);
   }
 
   onError(errorMsg: string) {
@@ -74,7 +82,7 @@ export class CursosComponent implements OnInit {
     // this.onError('Erro ao carregar cursos.');
   }
   onAdd() {
-    this.router.navigate(['new'], { relativeTo: this.route });
+    this.router.navigate(['/cursos/new'], { relativeTo: this.route });
   }
 
   onEdit(curso: Curso) {
@@ -82,16 +90,26 @@ export class CursosComponent implements OnInit {
     this.router.navigate(['/cursos/edit', curso._id]);
   }
 
-  onDelete(id: string): void {
-    if (confirm('Deseja remover este curso?')) {
-      this.cursosService.delete(id).subscribe({
-        next: () => {
-          this.cursos$ = this.cursosService.list();
-        },
-        error: () => {
-          this.onError('Erro ao remover curso');
-        },
+  onDelete(curso: Curso) {
+  console.log('CURSO RECEBIDO NO PAI:', curso);
+  console.log('ID RECEBIDO NO PAI:', curso._id);
+
+  this.cursosService.delete(curso._id).subscribe({
+    next: () => {
+      console.log('DELETE REALIZADO COM SUCESSO');
+
+      this.refresh();
+
+      this.snackBar.open('Curso deletado com sucesso!', 'X', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
       });
+    },
+    error: (err) => {
+      console.error('ERRO NO DELETE:', err);
+      this.onError('Erro ao tentar remover curso.');
     }
-  }
+  });
+}
 }
