@@ -4,10 +4,15 @@
   </mat-card-header>
 
 
+
   <mat-card-content>
     <form [formGroup]="form" class="min-width">
       <mat-form-field class="full-width">
         <mat-label for="name-filter"> Nome </mat-label>
+        <mat-error *ngIf="form.get('name')?.invalid">{{
+        getErrorMessage("name")
+        }}</mat-error>
+
 
         <mat-select formControlName="name">
           <mat-option value="null"> </mat-option>
@@ -19,7 +24,9 @@
 
       <mat-form-field class="full-width">
         <mat-label for="name-filter"> Categoria </mat-label>
-
+        <mat-error *ngIf="form.get('category')?.invalid">{{
+        getErrorMessage("name")
+        }}</mat-error>
 
         <mat-select formControlName="category">
           <mat-option value="null"> </mat-option>

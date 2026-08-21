@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { booleanAttribute, Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
@@ -7,17 +7,18 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import {MatInputModule} from '@angular/material/input';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { CommonModule } from '@angular/common';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorDialogComponent } from '../../../pasta/components/error-dialog/error-dialog.component';
 import { Curso } from '../../model/curso';
 import { CursosService } from '../../services/cursos.service';
 import { CursoListComponent } from "../../components/curso-list/curso-list.component";
+import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -91,15 +92,15 @@ export class CursosComponent implements OnInit {
   }
 
   onDelete(curso: Curso) {
-  console.log('CURSO RECEBIDO NO PAI:', curso);
-  console.log('ID RECEBIDO NO PAI:', curso._id);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        data: 'Tem certeza que deseja remover este curso?',
+      });
 
-  this.cursosService.delete(curso._id).subscribe({
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+        if (result) {
+          this.cursosService.delete(curso._id).subscribe({
     next: () => {
-      console.log('DELETE REALIZADO COM SUCESSO');
-
       this.refresh();
-
       this.snackBar.open('Curso deletado com sucesso!', 'X', {
         duration: 3000,
         verticalPosition: 'top',
@@ -111,5 +112,7 @@ export class CursosComponent implements OnInit {
       this.onError('Erro ao tentar remover curso.');
     }
   });
+        }
+      });
 }
 }
