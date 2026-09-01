@@ -1,14 +1,15 @@
 <mat-card>
   <mat-card-header>
-    <mat-toolbar> Cursos disponiveis </mat-toolbar>
+    <mat-toolbar style="background-color: #3f51b5; color: white"> Cursos disponiveis </mat-toolbar>
   </mat-card-header>
 
   <div class="column-flex">
-    <app-curso-list *ngIf="cursos$ | async as cursos; else loading"
-    [cursos]="cursos"
-    (add)="onAdd()"
-    (edit)="onEdit($event)"
-    (delete)="onDelete($event)"
+    <app-curso-list
+      *ngIf="cursos$ | async as cursos; else loading"
+      [cursos]="cursos"
+      (add)="onAdd()"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)"
     ></app-curso-list>
 
     <mat-card-content>

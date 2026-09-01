@@ -74,14 +74,14 @@ export class CursoFormComponent implements OnInit {
       return 'Campo obrigatório';
     }
 
-    if (field?.hasError('minlenght')){
-      const requiredLenght = field.errors ? field.errors['minlenght']['requiredlenght']: 5;
-      return `Tamanho mínimo precisa ser de ${requiredLenght} caracteres.`;
+    if (field?.hasError('minlength')){
+      const requiredLength = field.errors ? field.errors['minlength']['requiredlength']: 5;
+      return `Tamanho mínimo precisa ser de ${requiredLength} caracteres.`;
     }
 
-    if (field?.hasError('maxlenght')){
-      const requiredLenght = field.errors ? field.errors['maxlenght']['requiredlenght']: 100;
-      return `Tamanho máximo excedido de ${requiredLenght} caracteres.`;
+    if (field?.hasError('maxlength')){
+      const requiredLength = field.errors ? field.errors['maxlength']['requiredlength']: 100;
+      return `Tamanho máximo excedido de ${requiredLength} caracteres.`;
     }
 
     return 'Campo inválido';
